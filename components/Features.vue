@@ -8,7 +8,7 @@
             <v-col cols="6">
                 <v-card-title class="text-h5">
                     Open Source
-                    <v-icon>mdi-github</v-icon>
+                    <v-icon class="mdi-36px">mdi-github</v-icon>
                 </v-card-title>
 
 
@@ -19,7 +19,7 @@
             <v-col cols="6">
                 <v-card-title class="text-h5">
                     High Accuracy
-                    <v-icon>mdi-bullseye-arrow</v-icon>
+                    <v-icon class="mdi-36px">mdi-bullseye-arrow</v-icon>
                 </v-card-title>
 
                 <v-card-subtitle>The model is trained on a custom-made Convolution Neural Network. Guaranteed to give you
@@ -31,7 +31,7 @@
             <v-col cols="6">
                 <v-card-title class="text-h5">
                     Fast Processing
-                    <v-icon>mdi-clock-fast</v-icon>
+                    <v-icon class="mdi-36px">mdi-clock-fast</v-icon>
                 </v-card-title>
 
                 <v-card-subtitle>We use enterprise grade servers to deliver the fastest and most stable
@@ -41,7 +41,7 @@
             <v-col cols="6">
                 <v-card-title class="text-h5">
                     No Log Policy
-                    <v-icon>mdi-file-remove-outline</v-icon>
+                    <v-icon class="mdi-36px">mdi-file-remove-outline</v-icon>
                 </v-card-title>
 
                 <v-card-subtitle>Your data is confidential. We have a no-log policy so your data is safe.</v-card-subtitle>
