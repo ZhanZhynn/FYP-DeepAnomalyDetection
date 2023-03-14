@@ -1,41 +1,43 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col cols="6">
-        <v-card style="height: 24rem; align-self: center;">
+  <div>
+    <v-container>
+      <v-row>
+        <v-col cols="6">
+          <v-card style="height: 24rem; align-self: center;">
 
-          <v-card-actions class="justify-center">
-            <!-- <img src="../static/icon.png" :width="250" aspect-ratio="1/1" /> -->
-            <v-img src="https://blog.deemoney.com/content/images/2020/11/shutterstock_1456783511.jpg" height="200px"
-              cover></v-img>
-          </v-card-actions>
-          <v-card-title class="justify-center">
-            Financial Fraud Detection Software
-          </v-card-title>
-          <v-card-text class=text-center>
-            100% Open Source and Free
-          </v-card-text>
-        </v-card>
+            <v-card-actions class="justify-center">
+              <!-- <img src="../static/icon.png" :width="250" aspect-ratio="1/1" /> -->
+              <v-img src="https://blog.deemoney.com/content/images/2020/11/shutterstock_1456783511.jpg" height="200px"
+                cover></v-img>
+            </v-card-actions>
+            <v-card-title class="justify-center">
+              Financial Fraud Detection Software
+            </v-card-title>
+            <v-card-text class=text-center>
+              100% Open Source and Free
+            </v-card-text>
+          </v-card>
 
-      </v-col>
-      <v-col cols="6">
-        <Upload />
-      </v-col>
-    </v-row>
+        </v-col>
+        <v-col cols="6">
+          <Upload />
+        </v-col>
+      </v-row>
 
-    <br></br>
+      <br></br>
 
-    <v-row>
-      <Features />
-    </v-row>
+      <v-row>
+        <Features />
+      </v-row>
 
-    <br></br>
+      <br></br>
 
+
+
+
+    </v-container>
 
     <v-footer class="bg-indigo-lighten-1 text-center d-flex flex-column">
-      <div>
-        <v-btn v-for="icon in icons" :key="icon" class="mx-4" :icon="icon" variant="text"></v-btn>
-      </div>
 
       <div class="pt-0">
         You agree to access and use the Website and any
@@ -55,8 +57,7 @@
         {{ new Date().getFullYear() }} — <strong>MCS2</strong>
       </div>
     </v-footer>
-
-  </v-container>
+  </div>
 </template>
 
 <script>
