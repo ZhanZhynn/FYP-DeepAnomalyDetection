@@ -3,12 +3,14 @@
         <v-toolbar elevation="0">
             <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
 
-            <h1><a href="/" style="text-decoration: none; color: black">App Name</a></h1>
+            <div style="width:9rem;">
+                <h1><a href="/" style="text-decoration: none; color: black">MCS2</a></h1>
+            </div>
 
-            <v-spacer></v-spacer>
+            <!-- <v-spacer></v-spacer> -->
             <v-toolbar-items>
                 <v-btn text v-for="item in menuItems" :key="item.title" :to="item.path">
-                    <v-icon>{{ item.icon }}</v-icon>
+                    <!-- <v-icon>{{ item.icon }}</v-icon> -->
                     {{ item.title }}
                 </v-btn>
             </v-toolbar-items>
@@ -21,9 +23,10 @@ export default {
     data() {
         return {
             menuItems: [
-                { title: 'Home', path: '/index1', icon: 'mdi-magnify' },
-                { title: 'Sign Up', path: '/signup', icon: 'mdi-magnify-heart' },
-                { title: 'Sign In', path: '/signin', icon: 'mdi-dots-vertical' }
+                { title: 'Analyse', path: '/upload', icon: 'mdi-home' },
+                { title: 'Features', path: '/index1', icon: 'mdi-home' },
+                { title: 'Support', path: '/signup', icon: 'mdi-magnify-heart' },
+                { title: 'Change Log', path: '/signin', icon: 'mdi-dots-vertical' }
             ]
         }
     },
