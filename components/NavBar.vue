@@ -24,9 +24,9 @@ export default {
         return {
             menuItems: [
                 { title: 'Analyse', path: '/upload', icon: 'mdi-home' },
-                { title: 'Features', path: '/index1', icon: 'mdi-home' },
-                { title: 'Support', path: '/signup', icon: 'mdi-magnify-heart' },
-                { title: 'Change Log', path: '/signin', icon: 'mdi-dots-vertical' }
+                // { title: 'Features', path: '/index1', icon: 'mdi-home' },
+                { title: 'Support', path: '/contactus', icon: 'mdi-magnify-heart' },
+                { title: 'Change Log', path: '/changelog', icon: 'mdi-dots-vertical' }
             ]
         }
     },
