@@ -18,7 +18,7 @@
                     label="I agree to the terms and conditions" required></v-checkbox>
 
                 <v-btn :disabled="!valid" color="success" @click="validate">
-                    Validate
+                    Submit
                 </v-btn>
 
                 <v-btn color="error" @click="reset">
