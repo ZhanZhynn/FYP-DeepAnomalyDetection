@@ -7,15 +7,7 @@
                 <p>accepted file: .xlsx</p>
             </div>
 
-
         </v-card-actions>
-
-        <div>
-            <label for="text-input">Enter some text:</label>
-            <input type="text" id="text-input" v-model="text">
-            <button @click="submit">Submit</button>
-        </div>
-        <p>{{ msg }}</p>
 
     </v-card>
 </template>
