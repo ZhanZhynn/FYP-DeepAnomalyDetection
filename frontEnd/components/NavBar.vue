@@ -34,6 +34,7 @@ export default {
     data() {
         return {
             menuItems: [
+                { title: "DummyAnalyze", path: "/dummyanalyze", icon: "mdi-home" },
                 { title: "Analyse", path: "/upload", icon: "mdi-home" },
                 // { title: 'Features', path: '/index1', icon: 'mdi-home' },
                 { title: "Support", path: "/contactus", icon: "mdi-magnify-heart" },

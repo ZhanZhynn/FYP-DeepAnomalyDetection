@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <v-card-actions class="justify-center" style="height: 24rem;">
+        <!-- <v-card-actions class="justify-center" style="height: 24rem;">
             <div>
                 <v-file-input v-model="file" label="Upload File" prepend-icon="" multiple outlined show-size counter
                     color="primary" accept="text/xlsx"></v-file-input>
@@ -8,14 +8,43 @@
             </div>
 
 
-        </v-card-actions>
+        </v-card-actions> -->
 
-        <div>
+        <!-- <div>
             <label for="text-input">Enter some text:</label>
             <input type="text" id="text-input" v-model="text">
             <button @click="submit">Submit</button>
         </div>
-        <p>{{ msg }}</p>
+        <p>{{ msg }}</p> -->
+
+        <v-container>
+            <v-form ref="form">
+
+                <v-text-field v-model="text" label="Enter a number" required></v-text-field>
+                <p>{{ msg }}</p>
+
+
+
+                <!-- <v-textarea v-model="message" :counter="250" :rules="messageRules" label="Message" required></v-textarea> -->
+
+
+
+
+                <!-- <v-select v-model="select" :items="items" :rules="[v => !!v || 'Item is required']" label="Item"
+            required></v-select> -->
+
+
+                <v-btn color="success" @click="submit">
+                    Submit
+                </v-btn>
+
+                <v-btn color="error" @click="reset">
+                    Reset Form
+                </v-btn>
+
+
+            </v-form>
+        </v-container>
 
     </v-card>
 </template>
@@ -75,6 +104,9 @@ export default {
                     // eslint-disable-next-line
                     console.error(error);
                 });
+        },
+        reset() {
+            this.$refs.form.reset()
         },
 
     },
