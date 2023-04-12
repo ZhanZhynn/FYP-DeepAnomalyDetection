@@ -4,32 +4,44 @@
             <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
 
             <div style="width:9rem;">
-                <h1><a href="/" style="text-decoration: none; color: black">MCS2</a></h1>
+                <h1>
+                    <!-- <a href="/" style="text-decoration: none; color: black">MCS2</a> -->
+                    <router-link to="/" style="text-decoration: none; color: black">MSC2</router-link>
+                </h1>
             </div>
 
             <!-- <v-spacer></v-spacer> -->
             <v-toolbar-items>
                 <v-btn text v-for="item in menuItems" :key="item.title" :to="item.path">
-                    <!-- <v-icon>{{ item.icon }}</v-icon> -->
                     {{ item.title }}
                 </v-btn>
+                <!-- <v-icon>{{ item.icon }}</v-icon> -->
+
+                <!-- 
+                <router-link tag="v-btn" v-for="item in menuItems" :key="item.title" :to="item.path">
+                    {{ item.title }}
+                </router-link> -->
+
             </v-toolbar-items>
         </v-toolbar>
     </div>
 </template>
 
 <script>
+import { RouterLink } from 'vue-router';
+
 export default {
     data() {
         return {
             menuItems: [
-                { title: 'Analyse', path: '/upload', icon: 'mdi-home' },
+                { title: "Analyse", path: "/upload", icon: "mdi-home" },
                 // { title: 'Features', path: '/index1', icon: 'mdi-home' },
-                { title: 'Support', path: '/contactus', icon: 'mdi-magnify-heart' },
-                { title: 'Change Log', path: '/changelog', icon: 'mdi-dots-vertical' }
+                { title: "Support", path: "/contactus", icon: "mdi-magnify-heart" },
+                { title: "Change Log", path: "/changelog", icon: "mdi-dots-vertical" }
             ]
-        }
+        };
     },
+    components: { RouterLink }
 };
 
 </script>

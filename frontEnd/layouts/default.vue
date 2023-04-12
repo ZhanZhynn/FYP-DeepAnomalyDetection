@@ -1,7 +1,9 @@
 <template>
   <v-app>
     <NavBar />
-    <nuxt />
+    <router-view />
+    <!-- <nuxt /> -->
+
 
     <v-footer class="bg-indigo-lighten-1 text-center d-flex flex-column">
 
