@@ -19,5 +19,12 @@ export default new Router({
             name: 'upload',
             component: upload,
         },
+
+
+        {
+            path: '/dummyanalyze',
+            name: 'dummyanalyze',
+            component: dummyanalyze,
+        },
     ],
 });
