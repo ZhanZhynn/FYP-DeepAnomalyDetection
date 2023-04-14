@@ -37,7 +37,7 @@ def predict():
         features = np.array([[data**3, data**2, data**1, data**0]])
         
         #load model from file path /backEnd/server/model.pickle
-        file = os.path.join(os.path.dirname(__file__), 'model.pickle')
+        file = os.path.join(os.path.dirname(__file__), 'dummymodel.pickle')
         model=pickle.load(open(file,'rb'))
         pred = model.predict(features)[0][0]
 
