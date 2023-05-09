@@ -1,6 +1,11 @@
 <template>
     <v-row>
         <v-container>
+            <h2>Update 1.2</h2>
+            <p>-Integrated Machine Learning Model for Anomlay Detection.</p>
+            <p>-Fixed Analyse page not downloading output file correctly.</p>
+
+
             <h2>Update 1.1</h2>
             <!-- <v-card class="justify-center" style="height: 24rem; width: 48rem;"> -->
             <p>-Updated support page to include email and FAQ.</p>
