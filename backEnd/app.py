@@ -7,6 +7,11 @@ import pandas as pd
 from sklearn import preprocessing
 import io
 
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
+from sklearn.metrics import f1_score
+
 
 # configuration
 DEBUG = True
@@ -52,7 +57,7 @@ def predict():
         df.action = le.fit_transform(df.action)
 
         # Set up X and y
-        # y = df.isFraud
+        y_actual = df['isFraud']
         df = df.drop(['isFraud', 'isFlaggedFraud',
                       'isUnauthorizedOverdraft'], axis=1)
 
@@ -77,6 +82,13 @@ def predict():
 
         df_return['isFlaggedFraud'] = y_pred
 
+
+        #calculate metrics score
+        accuracy = accuracy_score(y_actual, y_pred)
+        precision = precision_score(y_actual, y_pred)
+        recall = recall_score(y_actual, y_pred)
+        f1 = f1_score(y_actual, y_pred)
+
         # OutfileName = 'excel_file.csv'
         # df.to_csv('excel_file.csv', index=False)
         # df.to_csv('excel_file.csv', index=False)
@@ -87,7 +99,11 @@ def predict():
         #             download_name='excel_file.csv',
         #             as_attachment=True)
 
-        response = f"Frauds: {isFraudCount}, Non-Frauds: {len(y_pred)-isFraudCount}. \n\nPlease download the excel file for more details"
+        # response = f"Frauds: {isFraudCount}, Non-Frauds: {len(y_pred)-isFraudCount}. \n\nPlease download the excel file for more details"
+        response = {
+            'message': 'Frauds: ' + str(isFraudCount) +', ' + 'Non-Frauds: ' + str(len(y_pred)-isFraudCount),
+            'metrics': 'accuracy: ' + str(round(accuracy,2)) + ', ' + 'precision: ' + str(round(precision,2)) + ', ' + 'recall: ' + str(round(recall,2)) + ', ' + 'f1: ' + str(round(f1,2)),
+        }
 
     else:
         # df_dict = session.get('df')

@@ -41,6 +41,9 @@
             </v-card-actions>
 
             <p>{{ msg }}</p>
+            <p>{{ metrics }}</p>
+            <p v-if="!isDownloadDisabled">File ready. Please download the excel file for more details.</p>
+
 
         </v-container>
 
@@ -54,12 +57,14 @@ export default {
     name: 'Ping',
     data() {
         return {
-            msg: 'No message yet',
+            msg: 'No file found. Please upload a csv file.',
             file: null,
             text: '',
             isDownloadDisabled: true,
             isSubmitDisabled: true,
             errorMessage: '',
+            metrics: '',
+
         };
     },
     methods: {
@@ -104,6 +109,7 @@ export default {
             // send input to backend
             this.isDownloadDisabled = true;   //disable download button
             this.msg = 'Processing...'
+            this.metrics = ''
             const path = 'http://localhost:5000/upload';
             const formData = new FormData()
             console.log(this.file)
@@ -128,7 +134,9 @@ export default {
                     // document.body.appendChild(link);
                     // link.click();
 
-                    this.msg = res.data;
+                    this.msg = res.data.message;
+                    this.metrics = res.data.metrics;
+
                     this.isDownloadDisabled = false;   //can download file now
 
                 })
