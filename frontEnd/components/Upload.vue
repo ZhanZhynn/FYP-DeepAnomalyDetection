@@ -41,7 +41,7 @@
             </v-card-actions>
 
             <p>{{ msg }}</p>
-            <p>{{ metrics }}</p>
+            <!-- <p>{{ metrics }}</p> -->
             <p v-if="!isDownloadDisabled">File ready. Please download the excel file for more details.</p>
 
 
@@ -57,7 +57,7 @@ export default {
     name: 'Ping',
     data() {
         return {
-            msg: 'No file found. Please upload a csv file.',
+            msg: 'No file found. Please upload and submit a csv file.',
             file: null,
             text: '',
             isDownloadDisabled: true,
@@ -82,20 +82,15 @@ export default {
         onFileSelected(event) {
             this.file = event.target.files[0]
             console.log(this.file)
-            if (this.file.type !== 'text/csv') {
+            if (!this.file || this.file.type !== 'text/csv') {  //no file chosen or incorrect file type
                 this.errorMessage = 'Please select a CSV file.'
+                this.msg = 'No file found. Please upload and submit a csv file.'
                 this.file == null
                 this.isSubmitDisabled = true;
                 this.isDownloadDisabled = true;
                 return
             }
-            if (this.file == null) {
-                this.isSubmitDisabled = true;
-                this.isDownloadDisabled = true;
-                this.file = null;
-                this.errorMessage = 'Please upload a CSV file.';
-
-            } else {
+            else {    //correct file, can submit
                 this.isSubmitDisabled = false;
                 this.isDownloadDisabled = true;
                 this.errorMessage = '';
@@ -123,17 +118,6 @@ export default {
                 }
             })
                 .then((res) => {
-                    // this.msg = res.data.message;
-                    // console.log(res.data)
-
-                    // Create a URL for the blob response and download it
-                    // const url = window.URL.createObjectURL(new Blob([res.data]));
-                    // const link = document.createElement('a');
-                    // link.href = url;
-                    // link.setAttribute('download', 'excel_file.csv');
-                    // document.body.appendChild(link);
-                    // link.click();
-
                     this.msg = res.data.message;
                     this.metrics = res.data.metrics;
 
@@ -141,13 +125,11 @@ export default {
 
                 })
                 .catch((error) => {
-                    // eslint-disable-next-line
                     console.error(error);
                 });
-            // console.log(this.text)
-
         },
 
+        //get the csv file
         getPrediction() {
             const path = 'http://localhost:5000/upload';
             axios({

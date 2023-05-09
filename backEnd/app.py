@@ -36,33 +36,32 @@ df_return = pd.DataFrame()
 @app.route('/upload', methods=['POST', 'GET'])
 def predict():
     global df_return
+    cal_matrics = False
 
     response_object = {'status': 'success'}
     if request.method == 'POST':
 
         # get file from post request
         file = request.files['file']
-        # df = pd.read_csv(file)
-        # print(df.head())
 
         # Read file and drop unrequired features
         df = pd.read_csv(file)
-        df_return = df.copy()
+        df_return = df.copy()   #output file
         df = df.drop(['nameOrig', 'step', 'nameDest'], axis=1)
-
-        print(df.head())
 
         # Convert action to numbers
         le = preprocessing.LabelEncoder()
         df.action = le.fit_transform(df.action)
 
         # Set up X and y
-        y_actual = df['isFraud']
-        df = df.drop(['isFraud', 'isFlaggedFraud',
-                      'isUnauthorizedOverdraft'], axis=1)
+        if len(df.columns) > 6:
+            # cal_matrics = True  #to calculate the accuracy, precision, recall and f1 score
+            y_actual = df['isFraud']
+            df = df.drop(['isFraud', 'isFlaggedFraud',
+                        'isUnauthorizedOverdraft'], axis=1)
 
-        df_return = df_return.drop(['isFraud', 'isFlaggedFraud',
-                                    'isUnauthorizedOverdraft'], axis=1)
+            df_return = df_return.drop(['isFraud', 'isFlaggedFraud',
+                                        'isUnauthorizedOverdraft'], axis=1)
 
         # Reshape X to fit model
         X = df.to_numpy()
@@ -80,14 +79,20 @@ def predict():
 
         # session['df_return'] = df.to_dict()
 
+        #append the prediction result to the csv
         df_return['isFlaggedFraud'] = y_pred
 
-
-        #calculate metrics score
-        accuracy = accuracy_score(y_actual, y_pred)
-        precision = precision_score(y_actual, y_pred)
-        recall = recall_score(y_actual, y_pred)
-        f1 = f1_score(y_actual, y_pred)
+        #calculate metrics score 
+        if cal_matrics:
+            accuracy = accuracy_score(y_actual, y_pred)
+            precision = precision_score(y_actual, y_pred)
+            recall = recall_score(y_actual, y_pred)
+            f1 = f1_score(y_actual, y_pred)
+        else:
+            accuracy = 0.0
+            precision = 0.0
+            recall = 0.0
+            f1 = 0.0
 
         # OutfileName = 'excel_file.csv'
         # df.to_csv('excel_file.csv', index=False)
@@ -112,7 +117,6 @@ def predict():
 
         # Convert the dictionary back to a DataFrame
         # df = pd.DataFrame.from_dict(df_dict)
-        print(df_return.head())
         df_return.to_csv('excel_file.csv', index=False)
 
         file_stream = io.BytesIO(open('excel_file.csv', "rb").read())
