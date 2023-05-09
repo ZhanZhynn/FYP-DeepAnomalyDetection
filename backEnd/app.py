@@ -162,6 +162,21 @@ def getFile():
 
     return response, excel_file
 
+@app.route('/delete-csv', methods=['GET'])
+def delete_csv():
+    # Get file path from request
+    file_path = "excel_file.csv"
+
+    # Delete file
+    os.remove(file_path)
+
+    return_response = {
+        'message': 'File deleted from server. Unable to retrieve it again.',
+    }
+
+    # Return response
+    return return_response
+
 # if __name__ == '__main__':
 #     app.run()
 

@@ -42,7 +42,8 @@
 
             <p>{{ msg }}</p>
             <!-- <p>{{ metrics }}</p> -->
-            <p v-if="!isDownloadDisabled">File ready. Please download the excel file for more details.</p>
+            <p v-if="!isDownloadDisabled">File ready. Please download the excel file for more details. File will be removed
+                from server immediately after download.</p>
 
 
         </v-container>
@@ -146,14 +147,66 @@ export default {
                     link.click();
 
                     // Handle the message
-                    const message = response.data.message;
-                    alert(message);
+                    const message = res.data.message;
+                    // alert(message);
+
+                    //delete the csv file after download
+                    // deleteCsv();
+
+                    //delete the csv file after download
+                    const path = 'http://localhost:5000/delete-csv';
+                    axios({
+                        method: 'get',
+                        url: path,
+                        responseType: 'blob'
+                    })
+                        .then((res) => {
+                            // Handle the message
+                            // const message = res.data;
+                            // alert(message);
+
+                            this.isDownloadDisabled = true;   //disable download button
+                            this.msg = 'File deleted from server. Unable to retrieve it again. Kindly submit a new csv file.'
+
+                        })
+                        .catch((error) => {
+                            // eslint-disable-next-line
+                            console.error(error);
+                        });
+
+
+
+
                 })
                 .catch((error) => {
                     // eslint-disable-next-line
                     console.error(error);
                 });
         },
+
+        // deleteCsv() {
+        //     const path = 'http://localhost:5000/delete-csv';
+        //     axios({
+        //         method: 'get',
+        //         url: path,
+        //         responseType: 'blob'
+        //     })
+        //         .then((res) => {
+        //             // Handle the message
+        //             // const message = res.data;
+        //             // alert(message);
+
+        //             this.isSubmitDisabled = true;   //disable submit button
+        //             this.isDownloadDisabled = true;   //disable download button
+        //             this.msg = 'No file found. Please upload and submit a csv file.'
+
+        //         })
+        //         .catch((error) => {
+        //             // eslint-disable-next-line
+        //             console.error(error);
+        //         });
+
+        // }
 
     },
     created() {
