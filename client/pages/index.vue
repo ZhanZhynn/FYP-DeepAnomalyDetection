@@ -1,4 +1,4 @@
-<template>
+<template class="custom-background">
   <v-row>
     <v-container>
       <v-row>
@@ -73,4 +73,9 @@ export default {
 
 </script>
 
-<style  scoped></style>
+<style  scoped>
+.custom-background {
+  background-color: #F9FBE7;
+  /* Replace with your desired color */
+}
+</style>

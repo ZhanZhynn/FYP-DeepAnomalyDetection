@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="custom-background">
     <NavBar />
     <router-view />
     <!-- <nuxt /> -->
@@ -40,5 +40,13 @@ export default {
   },
 }
 </script>
+
+<style  scoped>
+.custom-background {
+  background-color: #F1F6F9;
+  /* Replace with your desired color */
+}
+</style>
+
 
 

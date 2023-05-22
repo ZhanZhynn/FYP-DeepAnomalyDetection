@@ -41,7 +41,7 @@
             </v-card-actions>
 
             <p>{{ msg }}</p>
-            <!-- <p>{{ metrics }}</p> -->
+            <p>{{ metrics }}</p>
             <p v-if="!isDownloadDisabled">File ready. Please download the excel file for more details. File will be removed
                 from server immediately after download.</p>
 
@@ -100,7 +100,6 @@ export default {
 
         },
 
-
         submit() {
             // send input to backend
             this.isDownloadDisabled = true;   //disable download button
@@ -111,11 +110,8 @@ export default {
             console.log(this.file)
             formData.append('file', this.file)
             axios.post(path, formData, {
-                // text: this.text,
                 headers: {
                     'Content-Type': 'multipart/form-data'
-                    // responseType: 'blob'
-                    // responseType: 'arraybuffer'
                 }
             })
                 .then((res) => {
@@ -145,13 +141,8 @@ export default {
                     link.setAttribute('download', 'excel_file.csv');
                     document.body.appendChild(link);
                     link.click();
-
                     // Handle the message
                     const message = res.data.message;
-                    // alert(message);
-
-                    //delete the csv file after download
-                    // deleteCsv();
 
                     //delete the csv file after download
                     const path = 'http://localhost:5000/delete-csv';
@@ -161,20 +152,13 @@ export default {
                         responseType: 'blob'
                     })
                         .then((res) => {
-                            // Handle the message
-                            // const message = res.data;
-                            // alert(message);
-
                             this.isDownloadDisabled = true;   //disable download button
                             this.msg = 'File deleted from server. Unable to retrieve it again. Kindly submit a new csv file.'
-
                         })
                         .catch((error) => {
                             // eslint-disable-next-line
                             console.error(error);
                         });
-
-
 
 
                 })

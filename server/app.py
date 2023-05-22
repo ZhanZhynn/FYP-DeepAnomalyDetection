@@ -36,11 +36,9 @@ df_return = pd.DataFrame()
 @app.route('/upload', methods=['POST', 'GET'])
 def predict():
     global df_return
-    cal_matrics = False
-
+    cal_matrics = True
     response_object = {'status': 'success'}
     if request.method == 'POST':
-
         # get file from post request
         file = request.files['file']
 
@@ -55,7 +53,6 @@ def predict():
 
         # Set up X and y
         if len(df.columns) > 6:
-            # cal_matrics = True  #to calculate the accuracy, precision, recall and f1 score
             y_actual = df['isFraud']
             df = df.drop(['isFraud', 'isFlaggedFraud',
                         'isUnauthorizedOverdraft'], axis=1)
@@ -66,19 +63,11 @@ def predict():
         # Reshape X to fit model
         X = df.to_numpy()
         X = X.reshape((X.shape[0], 1, X.shape[1]))
-
-        # load model from file path /backEnd/server/model.pickle
-        # modelFile = os.path.join(os.path.dirname(__file__), 'dummymodel.pickle')
         modelFile = os.path.join(os.path.dirname(__file__), 'model_lstm.sav')
-
         model = pickle.load(open(modelFile, 'rb'))
         prediction = model.predict(X)
         y_pred = np.round(prediction)
-
         isFraudCount = len(np.where(y_pred == 1)[0])
-
-        # session['df_return'] = df.to_dict()
-
         #append the prediction result to the csv
         df_return['isFlaggedFraud'] = y_pred
 
@@ -94,29 +83,12 @@ def predict():
             recall = 0.0
             f1 = 0.0
 
-        # OutfileName = 'excel_file.csv'
-        # df.to_csv('excel_file.csv', index=False)
-        # df.to_csv('excel_file.csv', index=False)
-
-        # file_stream = io.BytesIO(open('excel_file.csv', "rb").read())
-
-        # response = send_file(file_stream,
-        #             download_name='excel_file.csv',
-        #             as_attachment=True)
-
-        # response = f"Frauds: {isFraudCount}, Non-Frauds: {len(y_pred)-isFraudCount}. \n\nPlease download the excel file for more details"
         response = {
             'message': 'Frauds: ' + str(isFraudCount) +', ' + 'Non-Frauds: ' + str(len(y_pred)-isFraudCount),
             'metrics': 'accuracy: ' + str(round(accuracy,2)) + ', ' + 'precision: ' + str(round(precision,2)) + ', ' + 'recall: ' + str(round(recall,2)) + ', ' + 'f1: ' + str(round(f1,2)),
         }
 
     else:
-        # df_dict = session.get('df')
-        # if df_dict is None:
-        # return 'DataFrame not found in session'
-
-        # Convert the dictionary back to a DataFrame
-        # df = pd.DataFrame.from_dict(df_dict)
         df_return.to_csv('excel_file.csv', index=False)
 
         file_stream = io.BytesIO(open('excel_file.csv', "rb").read())
@@ -126,14 +98,7 @@ def predict():
                              as_attachment=True)
         # prediction_statement =  f"Please upload a valid file"
 
-    # return_response = {
-    #     'message': prediction_statement,
-    # }
-
-    # return jsonify(prediction_statement)
-    # return response.status_code, jsonify(return_response)
     return response
-    # return jsonify(return_response), response.status_code
 
 
 @app.route('/upload', methods=['GET'])
