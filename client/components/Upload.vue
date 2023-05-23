@@ -159,6 +159,8 @@ export default {
             this.msg = 'Processing...'
             this.metrics = ''
             const path = 'http://localhost:5000/upload';
+            // const path = '/upload';
+
             const formData = new FormData()
             console.log(this.file)
             formData.append('file', this.file)
@@ -184,6 +186,8 @@ export default {
         //get the csv file
         getPrediction() {
             const path = 'http://localhost:5000/upload';
+            // const path = '/upload';
+
             axios({
                 method: 'get',
                 url: path,
@@ -201,6 +205,8 @@ export default {
 
                     //delete the csv file after download
                     const path = 'http://localhost:5000/delete-csv';
+                    // const path = '/delete-csv';
+
                     axios({
                         method: 'get',
                         url: path,

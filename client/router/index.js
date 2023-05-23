@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import ContactUs from '../pages/ContactUs.vue';
-import upload from '../pages/upload.vue';
+import upload from '../components/Upload.vue';
 
 Vue.use(Router);
 
