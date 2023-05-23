@@ -84,7 +84,7 @@ def predict():
             return predictions
         
         import matplotlib
-        exp=explainer.explain_instance(X_train[17], custom_regressor, num_features=6, labels=(0,))
+        exp=explainer.explain_instance(X_train[1], custom_regressor, num_features=6, labels=(0,))
 
         exp.show_in_notebook(show_table=False)
         exp.as_pyplot_figure(label=0); 
