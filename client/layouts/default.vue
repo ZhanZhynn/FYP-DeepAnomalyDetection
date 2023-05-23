@@ -5,7 +5,7 @@
     <!-- <nuxt /> -->
 
 
-    <v-footer class="bg-indigo-lighten-1 text-center d-flex flex-column">
+    <!-- <v-footer class="bg-indigo-lighten-1 text-center d-flex flex-column">
 
       <div class="pt-0">
         You agree to access and use the Website and any
@@ -24,7 +24,7 @@
       <div>
         {{ new Date().getFullYear() }} — <strong>MCS2</strong>
       </div>
-    </v-footer>
+    </v-footer> -->
   </v-app>
 </template>
 

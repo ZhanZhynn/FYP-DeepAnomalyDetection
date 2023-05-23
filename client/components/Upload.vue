@@ -41,7 +41,56 @@
             </v-card-actions>
 
             <p>{{ msg }}</p>
-            <p>{{ metrics }}</p>
+            <!-- <p>{{ metrics }}</p> -->
+            <!-- <p>{{ jsonLime }}</p> -->
+            <!-- View json lime object in a table form-->
+            <p v-if="this.lime != null">Explanation of the decision made by the model:</p>
+            <v-simple-table v-if="this.lime != null">
+                <!-- <template v-slot:default> -->
+                <thead>
+                    <tr>
+                        <th class="text-left">Features</th>
+                        <th class="text-left">Contribution</th>
+                    </tr>
+                </thead>
+                <!-- <tbody>
+                    <tr v-for="item in JSON.parse(lime)" :key="item.Feature">
+                        <td>{{ item.Feature }}</td>
+                        <td>{{ item.Contribution }}</td>
+                    </tr>
+                </tbody> -->
+                <tbody>
+                    <tr v-for="(item, index) in JSON.parse(lime)" :key="index">
+                        <td>
+                            <!-- Hardcoded left column -->
+                            <template v-if="index === 0">
+                                New Balance Orig
+                            </template>
+                            <template v-else-if="index === 1">
+                                Amount
+                            </template>
+                            <template v-else-if="index === 2">
+                                Old Balance Orig
+                            </template>
+                            <template v-else-if="index === 3">
+                                Action
+                            </template>
+                            <template v-else-if="index === 4">
+                                New Balance Dest
+                            </template>
+                            <template v-else-if="index === 5">
+                                Old Balance Dest
+                            </template>
+                            <!-- Add more hardcoded left column values as needed -->
+                        </td>
+                        <td>{{ item.Contribution }}</td>
+                    </tr>
+                </tbody>
+                <!-- </template> -->
+            </v-simple-table>
+
+
+
             <p v-if="!isDownloadDisabled">File ready. Please download the excel file for more details. File will be removed
                 from server immediately after download.</p>
 
@@ -65,6 +114,8 @@ export default {
             isSubmitDisabled: true,
             errorMessage: '',
             metrics: '',
+            lime: null,
+            // jsonLime: JSON.parse(lime),
 
         };
     },
@@ -86,15 +137,17 @@ export default {
             if (!this.file || this.file.type !== 'text/csv') {  //no file chosen or incorrect file type
                 this.errorMessage = 'Please select a CSV file.'
                 this.msg = 'No file found. Please upload and submit a csv file.'
-                this.file == null
+                this.file = null
                 this.isSubmitDisabled = true;
                 this.isDownloadDisabled = true;
+                this.lime = null
                 return
             }
             else {    //correct file, can submit
                 this.isSubmitDisabled = false;
                 this.isDownloadDisabled = true;
                 this.errorMessage = '';
+                this.lime = null
 
             }
 
@@ -117,6 +170,7 @@ export default {
                 .then((res) => {
                     this.msg = res.data.message;
                     this.metrics = res.data.metrics;
+                    this.lime = res.data.lime;
 
                     this.isDownloadDisabled = false;   //can download file now
 

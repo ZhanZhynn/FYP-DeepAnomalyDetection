@@ -71,6 +71,28 @@ def predict():
         #append the prediction result to the csv
         df_return['isFlaggedFraud'] = y_pred
 
+        ################## LIME ####################
+        X_train = X.copy()
+        from lime import lime_tabular
+        explainer = lime_tabular.RecurrentTabularExplainer(
+            X_train, feature_names = ['action', 'amount', 'oldBalanceOrig',
+                            'newBalanceOrig', 'oldBalanceDest', 'newBalanceDest'],
+            verbose=True, mode='classification')
+
+        def custom_regressor(x_test):
+            predictions = model.predict(x_test)
+            return predictions
+        
+        import matplotlib
+        exp=explainer.explain_instance(X_train[17], custom_regressor, num_features=6, labels=(0,))
+
+        exp.show_in_notebook(show_table=False)
+        exp.as_pyplot_figure(label=0); 
+        exp_pd = pd.DataFrame(exp.as_list(label=0),columns=['Feature','Contribution'])
+        print('here',exp_pd)
+
+        ####################    ####################
+
         #calculate metrics score 
         if cal_matrics:
             accuracy = accuracy_score(y_actual, y_pred)
@@ -86,6 +108,7 @@ def predict():
         response = {
             'message': 'Frauds: ' + str(isFraudCount) +', ' + 'Non-Frauds: ' + str(len(y_pred)-isFraudCount),
             'metrics': 'accuracy: ' + str(round(accuracy,2)) + ', ' + 'precision: ' + str(round(precision,2)) + ', ' + 'recall: ' + str(round(recall,2)) + ', ' + 'f1: ' + str(round(f1,2)),
+            'lime': exp_pd.to_json(orient='records')
         }
 
     else:
