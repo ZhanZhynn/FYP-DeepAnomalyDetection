@@ -33,6 +33,7 @@ RUN apk update && apk add --no-cache python3 && \
 
 RUN apk add --update --no-cache --virtual .tmp gcc libc-dev linux-headers
 RUN apk add --no-cache jpeg-dev zlib-dev mariadb-dev libffi-dev openblas-dev libgfortran lapack-dev build-base openssl-dev
+RUN apk update && apk add postgresql-dev gcc python3-dev musl-dev
 
 RUN apk add --no-cache \
     build-base \
@@ -53,8 +54,6 @@ COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 
 # Copy Python requirements and install them
 COPY ./server/requirements.txt .
-# RUN pip install h5py
-# RUN pip install scipy
 RUN pip install --upgrade pip
 RUN pip install --ignore-installed -r requirements.txt
 RUN pip install gunicorn
