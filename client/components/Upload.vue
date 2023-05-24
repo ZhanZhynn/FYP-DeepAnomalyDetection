@@ -158,8 +158,8 @@ export default {
             this.isDownloadDisabled = true;   //disable download button
             this.msg = 'Processing...'
             this.metrics = ''
-            const path = 'http://localhost:5000/upload';
-            // const path = '/upload';
+            // const path = 'http://localhost:5000/upload';
+            const path = '/upload';
 
             const formData = new FormData()
             console.log(this.file)
@@ -185,8 +185,8 @@ export default {
 
         //get the csv file
         getPrediction() {
-            const path = 'http://localhost:5000/upload';
-            // const path = '/upload';
+            // const path = 'http://localhost:5000/upload';
+            const path = '/upload';
 
             axios({
                 method: 'get',
@@ -204,8 +204,8 @@ export default {
                     const message = res.data.message;
 
                     //delete the csv file after download
-                    const path = 'http://localhost:5000/delete-csv';
-                    // const path = '/delete-csv';
+                    // const path = 'http://localhost:5000/delete-csv';
+                    const path = '/delete-csv';
 
                     axios({
                         method: 'get',

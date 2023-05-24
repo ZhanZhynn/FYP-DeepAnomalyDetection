@@ -14,7 +14,7 @@ from sklearn.metrics import f1_score
 
 
 # configuration
-DEBUG = True
+DEBUG = False
 
 # instantiate the app
 app = Flask(__name__)
@@ -25,9 +25,9 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 
 
 # sanity check route
-# @app.route('/upload', methods=['GET'])
-# def ping_pong():
-#     return jsonify('pon11g!')
+@app.route('/ping', methods=['GET'])
+def ping_pong():
+    return jsonify('pon11g!')
 
 df_return = pd.DataFrame()
 # app.secret_key = 'my_secret_key'
@@ -105,6 +105,14 @@ def predict():
             recall = 0.0
             f1 = 0.0
 
+        # isFraudCount = 0
+        # y_pred = []
+        # accuracy = 0.0
+        # precision = 0.0
+        # recall = 0.0
+        # f1 = 0.0
+        # exp_pd = pd.DataFrame()
+
         response = {
             'message': 'Frauds: ' + str(isFraudCount) +', ' + 'Non-Frauds: ' + str(len(y_pred)-isFraudCount),
             'metrics': 'accuracy: ' + str(round(accuracy,2)) + ', ' + 'precision: ' + str(round(precision,2)) + ', ' + 'recall: ' + str(round(recall,2)) + ', ' + 'f1: ' + str(round(f1,2)),
@@ -165,20 +173,20 @@ def delete_csv():
     # Return response
     return return_response
 
-# if __name__ == '__main__':
-#     app.run()
-
-
 if __name__ == '__main__':
+    app.run()
 
-    port = int(os.getenv('PORT', 5000))
 
-    print("Starting app on port %d" % port)
+# if __name__ == '__main__':
 
-    if (port != 5000):
+#     port = int(os.getenv('PORT', 5000))
 
-        app.run(debug=False, port=port, host='0.0.0.0')
+#     print("Starting app on port %d" % port)
 
-    else:
+#     if (port != 5000):
 
-        app.run()
+#         app.run(debug=False, port=port, host='0.0.0.0')
+
+#     else:
+
+#         app.run()

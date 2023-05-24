@@ -3,8 +3,6 @@ FROM node:20 as build-vue
 
 WORKDIR /app
 
-RUN yarn global add nodemon
-
 # Copy and install dependencies
 COPY ./client/package*.json ./
 RUN npm install
@@ -55,8 +53,8 @@ COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 
 # Copy Python requirements and install them
 COPY ./server/requirements.txt .
-RUN pip install h5py
-RUN pip install scipy
+# RUN pip install h5py
+# RUN pip install scipy
 RUN pip install --upgrade pip
 RUN pip install --ignore-installed -r requirements.txt
 RUN pip install gunicorn
