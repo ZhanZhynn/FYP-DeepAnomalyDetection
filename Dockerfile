@@ -3,6 +3,8 @@ FROM node:20 as build-vue
 
 WORKDIR /app
 
+RUN yarn global add nodemon
+
 # Copy and install dependencies
 COPY ./client/package*.json ./
 RUN npm install
