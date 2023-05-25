@@ -15,12 +15,8 @@ RUN npm run build
 
 # Intermediate stage for TensorFlow dependencies
 FROM tensorflow/tensorflow:latest as tensorflow
-
-# Install additional dependencies for TensorFlow
 RUN apt-get update && apt-get install -y libhdf5-dev
 
-# Install TensorFlow and other required packages
-RUN python -m pip install tensorflow==2.7.0 tensorboard==2.7.0
 
 # Production stage with Nginx and Python dependencies
 FROM nginx:stable-alpine as production
@@ -37,16 +33,18 @@ RUN apk update && apk add --no-cache python3 && \
 
 RUN apk add --update --no-cache --virtual .tmp gcc libc-dev linux-headers
 RUN apk add --no-cache jpeg-dev zlib-dev mariadb-dev libffi-dev openblas-dev libgfortran lapack-dev build-base openssl-dev
+RUN apk update && apk add postgresql-dev gcc python3-dev musl-dev
 
 RUN apk add --no-cache \
     build-base \
-    hdf5-dev \
+	hdf5-dev \
     python3-dev \
     py3-pip \
     py3-numpy \
     py3-scipy \
     py3-matplotlib \
-    py3-scikit-learn
+ py3-scikit-learn
+	
 
 # Copy built assets from the build-vue stage
 COPY --from=build-vue /app/dist /usr/share/nginx/html

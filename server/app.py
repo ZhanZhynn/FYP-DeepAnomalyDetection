@@ -13,6 +13,7 @@ from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
 from sklearn.metrics import f1_score
 
+import joblib
 
 # configuration
 DEBUG = False
@@ -28,9 +29,73 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 # sanity check route
 @app.route('/ping', methods=['GET'])
 def ping_pong():
+
     # test tensorflow
-    return jsonify(str(tf.__version__))
+    hello = tf.constant("hello TensorFlow!")
+    return jsonify(str(tf.__version__), str(hello))
+
     # return jsonify('pon11g!')
+
+
+@app.route('/testPredict', methods=['GET'])
+def testPredict():
+    global df_return
+    df = df_return.copy()
+    # file = '/app/test3.csv'
+    df = df.drop(['nameOrig', 'step', 'nameDest'], axis=1)
+    le = preprocessing.LabelEncoder()
+    df.action = le.fit_transform(df.action)
+
+    if len(df.columns) > 6:
+        # y_actual = df['isFraud'].copy()   #this is the one casuing error
+        df = df.drop(['isFraud', 'isFlaggedFraud',
+                      'isUnauthorizedOverdraft'], axis=1)
+
+    # Reshape X to fit model
+    X = df.to_numpy()
+    X = X.reshape((X.shape[0], 1, X.shape[1]))
+
+    # with open(os.path.join(os.path.dirname(__file__), 'test3.csv')) as f:
+    #     df = pd.read_csv(f)
+
+    file = os.path.join(os.path.dirname(__file__), 'model_lstm.sav')
+    isExist = os.path.exists('model_lstm.sav')
+    # model = pickle.load(open(file, 'rb'))
+    # prediction = model.predict(X)
+    # y_pred = np.round(prediction)
+
+    return jsonify(str(isExist))
+
+
+@app.route('/testPredict2', methods=['GET'])
+def testPredict2():
+    global df_return
+    df = df_return.copy()
+    # file = '/app/test3.csv'
+    df = df.drop(['nameOrig', 'step', 'nameDest'], axis=1)
+    le = preprocessing.LabelEncoder()
+    df.action = le.fit_transform(df.action)
+
+    if len(df.columns) > 6:
+        # y_actual = df['isFraud'].copy()   #this is the one casuing error
+        df = df.drop(['isFraud', 'isFlaggedFraud',
+                      'isUnauthorizedOverdraft'], axis=1)
+
+    # Reshape X to fit model
+    X = df.to_numpy()
+    X = X.reshape((X.shape[0], 1, X.shape[1]))
+
+    # error on loading pickle file
+    # file = "file:///app/model_lstm.sav"
+    # model = joblib.load(open(file))
+    # isExist = os.path.exists(file)
+
+    # prediction = model.predict(X)
+    # y_pred = np.round(prediction)
+
+    # df1 = pd.read_csv(file1)
+
+    return jsonify(str(X))
 
 
 df_return = pd.DataFrame()
@@ -57,26 +122,28 @@ def predict():
 
         # Set up X and y
         if len(df.columns) > 6:
-            y_actual = df['isFraud']
+            # y_actual = df['isFraud']  #line causing error
             df = df.drop(['isFraud', 'isFlaggedFraud',
                           'isUnauthorizedOverdraft'], axis=1)
 
             df_return = df_return.drop(['isFraud', 'isFlaggedFraud',
                                         'isUnauthorizedOverdraft'], axis=1)
 
-        # Reshape X to fit model
+        # # Reshape X to fit model
         X = df.to_numpy()
         X = X.reshape((X.shape[0], 1, X.shape[1]))
+
         # modelFile = os.path.join(os.path.dirname(__file__), 'model_lstm.sav')
-        '''
-        modelFile = 'model_lstm.sav'
-        model = pickle.load(open(modelFile, 'rb'))
-        prediction = model.predict(X)
-        y_pred = np.round(prediction)
-        isFraudCount = len(np.where(y_pred == 1)[0])
-        # append the prediction result to the csv
-        df_return['isFlaggedFraud'] = y_pred
-        '''
+
+        # modelFile = 'model_lstm.sav'
+        # model = joblib.load(modelFile)
+        # model = pickle.load(open(modelFile, 'rb'))
+        # prediction = model.predict(X)
+        # y_pred = np.round(prediction)
+        # y_pred = []
+        # isFraudCount = len(np.where(y_pred == 1)[0])
+        # # append the prediction result to the csv
+        # df_return['isFlaggedFraud'] = y_pred
 
         ''' 
         ################## LIME ####################
@@ -114,7 +181,7 @@ def predict():
         #     recall = 0.0
         #     f1 = 0.0
 
-        isFraudCount = 0
+        isFraudCount = 0.0
         y_pred = []
         accuracy = 0.0
         precision = 0.0
