@@ -13,6 +13,11 @@ from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
 from sklearn.metrics import f1_score
 
+import keras
+from keras.layers import LSTM, Dense, Dropout
+from keras.models import Sequential
+
+
 import joblib
 
 # configuration
@@ -58,13 +63,12 @@ def testPredict():
     # with open(os.path.join(os.path.dirname(__file__), 'test3.csv')) as f:
     #     df = pd.read_csv(f)
 
-    file = os.path.join(os.path.dirname(__file__), 'model_lstm.sav')
-    isExist = os.path.exists('model_lstm.sav')
-    # model = pickle.load(open(file, 'rb'))
-    # prediction = model.predict(X)
-    # y_pred = np.round(prediction)
+    file = os.path.join(os.path.dirname(__file__), 'model.h5')
+    model = keras.models.load_model("model.h5")
+    prediction = model.predict(X)
+    y_pred = np.round(prediction)
 
-    return jsonify(str(isExist))
+    return jsonify(str(y_pred))
 
 
 @app.route('/testPredict2', methods=['GET'])
@@ -85,6 +89,18 @@ def testPredict2():
     X = df.to_numpy()
     X = X.reshape((X.shape[0], 1, X.shape[1]))
 
+    # model_path = "/app/model.p"
+    # file = os.path.join(os.path.dirname(__file__), 'dummymodel.pickle')
+    # file = os.path.join(os.path.dirname(__file__), 'model.h5')
+    # # model = joblib.load(file)
+    # model = pickle.load(open(file, 'rb'))
+    # file = os.path.join(os.path.dirname(__file__), 'model_lstm.sav')
+    # model = joblib.load(model_path)
+
+    file = os.path.join(os.path.dirname(__file__), 'model.h5')
+    model = keras.models.load_model(file)
+    prediction = model.predict(X)
+
     # error on loading pickle file
     # file = "file:///app/model_lstm.sav"
     # model = joblib.load(open(file))
@@ -95,7 +111,7 @@ def testPredict2():
 
     # df1 = pd.read_csv(file1)
 
-    return jsonify(str(X))
+    return jsonify(str(prediction))
 
 
 df_return = pd.DataFrame()
@@ -145,29 +161,36 @@ def predict():
         # # append the prediction result to the csv
         # df_return['isFlaggedFraud'] = y_pred
 
-        ''' 
+        # load the model, must use Keras.models.load_model, not joblib.load or pickle.load
+        file = os.path.join(os.path.dirname(__file__), 'model.h5')
+        model = keras.models.load_model("model.h5")
+        prediction = model.predict(X)
+        y_pred = np.round(prediction)
+        isFraudCount = len(np.where(y_pred == 1)[0])
+        df_return['isFlaggedFraud'] = y_pred
+
         ################## LIME ####################
         X_train = X.copy()
         from lime import lime_tabular
         explainer = lime_tabular.RecurrentTabularExplainer(
-            X_train, feature_names = ['action', 'amount', 'oldBalanceOrig',
-                            'newBalanceOrig', 'oldBalanceDest', 'newBalanceDest'],
+            X_train, feature_names=['action', 'amount', 'oldBalanceOrig',
+                                    'newBalanceOrig', 'oldBalanceDest', 'newBalanceDest'],
             verbose=True, mode='classification')
 
         def custom_regressor(x_test):
             predictions = model.predict(x_test)
             return predictions
-        
+
         import matplotlib
-        exp=explainer.explain_instance(X_train[1], custom_regressor, num_features=6, labels=(0,))
+        exp = explainer.explain_instance(
+            X_train[1], custom_regressor, num_features=6, labels=(0,))
 
         exp.show_in_notebook(show_table=False)
-        exp.as_pyplot_figure(label=0); 
-        exp_pd = pd.DataFrame(exp.as_list(label=0),columns=['Feature','Contribution'])
-        print('here',exp_pd)
+        exp.as_pyplot_figure(label=0)
+        exp_pd = pd.DataFrame(exp.as_list(label=0), columns=[
+                              'Feature', 'Contribution'])
 
         ####################    ####################
-        '''
 
         # calculate metrics score
         # if cal_matrics:
@@ -181,13 +204,13 @@ def predict():
         #     recall = 0.0
         #     f1 = 0.0
 
-        isFraudCount = 0.0
-        y_pred = []
+        # isFraudCount = 0.0
+        # y_pred = []
+
         accuracy = 0.0
         precision = 0.0
         recall = 0.0
         f1 = 0.0
-        exp_pd = pd.DataFrame()
 
         response = {
             'message': 'Frauds: ' + str(isFraudCount) + ', ' + 'Non-Frauds: ' + str(len(y_pred)-isFraudCount),

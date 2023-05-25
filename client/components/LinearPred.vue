@@ -77,7 +77,9 @@ export default {
 
         submit() {
             // send input to backend
-            const path = 'http://localhost:5000/upload';
+            // const path = 'http://localhost:5000/upload';
+            const path = '/upload';
+
             axios.post(path, {
                 text: this.text,
             })
@@ -95,7 +97,8 @@ export default {
         },
 
         getPrediction() {
-            const path = 'http://localhost:5000/upload';
+            // const path = 'http://localhost:5000/upload';
+            const path = '/upload';
             axios.get(path)
                 .then((res) => {
                     this.msg = res.data;
