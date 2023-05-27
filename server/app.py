@@ -17,7 +17,6 @@ import keras
 from keras.layers import LSTM, Dense, Dropout
 from keras.models import Sequential
 
-
 import joblib
 
 # configuration
@@ -31,7 +30,7 @@ app.config.from_object(__name__)
 CORS(app, resources={r'/*': {'origins': '*'}})
 
 
-# sanity check route
+# sanity check route to see if tensorflow is working
 @app.route('/ping', methods=['GET'])
 def ping_pong():
 
@@ -40,6 +39,8 @@ def ping_pong():
     return jsonify(str(tf.__version__), str(hello))
 
     # return jsonify('pon11g!')
+
+# sanity check route
 
 
 @app.route('/testPredict', methods=['GET'])
@@ -63,12 +64,14 @@ def testPredict():
     # with open(os.path.join(os.path.dirname(__file__), 'test3.csv')) as f:
     #     df = pd.read_csv(f)
 
-    file = os.path.join(os.path.dirname(__file__), 'model.h5')
-    model = keras.models.load_model("model.h5")
-    prediction = model.predict(X)
-    y_pred = np.round(prediction)
+    # file = os.path.join(os.path.dirname(__file__), 'model.h5')
+    # model = keras.models.load_model("model.h5")
+    # prediction = model.predict(X)
+    # y_pred = np.round(prediction)
 
-    return jsonify(str(y_pred))
+    return jsonify(str(X))
+
+# sanity check route
 
 
 @app.route('/testPredict2', methods=['GET'])
@@ -100,16 +103,6 @@ def testPredict2():
     file = os.path.join(os.path.dirname(__file__), 'model.h5')
     model = keras.models.load_model(file)
     prediction = model.predict(X)
-
-    # error on loading pickle file
-    # file = "file:///app/model_lstm.sav"
-    # model = joblib.load(open(file))
-    # isExist = os.path.exists(file)
-
-    # prediction = model.predict(X)
-    # y_pred = np.round(prediction)
-
-    # df1 = pd.read_csv(file1)
 
     return jsonify(str(prediction))
 
@@ -150,23 +143,16 @@ def predict():
         X = X.reshape((X.shape[0], 1, X.shape[1]))
 
         # modelFile = os.path.join(os.path.dirname(__file__), 'model_lstm.sav')
-
-        # modelFile = 'model_lstm.sav'
         # model = joblib.load(modelFile)
         # model = pickle.load(open(modelFile, 'rb'))
-        # prediction = model.predict(X)
-        # y_pred = np.round(prediction)
-        # y_pred = []
-        # isFraudCount = len(np.where(y_pred == 1)[0])
-        # # append the prediction result to the csv
-        # df_return['isFlaggedFraud'] = y_pred
-
         # load the model, must use Keras.models.load_model, not joblib.load or pickle.load
         file = os.path.join(os.path.dirname(__file__), 'model.h5')
         model = keras.models.load_model("model.h5")
         prediction = model.predict(X)
         y_pred = np.round(prediction)
         isFraudCount = len(np.where(y_pred == 1)[0])
+
+        # append the prediction result to the return csv
         df_return['isFlaggedFraud'] = y_pred
 
         ################## LIME ####################
