@@ -18,7 +18,7 @@ WORKDIR /app
 
 # Intermediate stage for TensorFlow dependencies
 #python
-FROM python:3.10
+FROM python:3.10-slim
 
 # Set the working directory in the container
 WORKDIR /app
