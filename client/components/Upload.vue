@@ -9,6 +9,11 @@
                     <input class='file-input' type='file' name='file' accept='text/csv' @change="onFileSelected" />
 
                     <p>accepted file: .csv</p>
+                    <p>Download sample <a
+                            href="https://drive.google.com/drive/folders/1NjaLaZ8tMeDQ9mOy4CiYV-T27jTpeUTi?usp=sharing"
+                            target="_blank">here</a>
+                    </p>
+
                     <div v-if="errorMessage" style="color: red;">{{ errorMessage }}</div>
                     <div>
                         <v-btn color="success" @click="submit" :disabled="isSubmitDisabled">
