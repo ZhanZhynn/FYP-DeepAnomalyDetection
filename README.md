@@ -39,8 +39,8 @@ Make sure you have Docker Desktop installed, if not download from <a href ="http
 
 Open docker desktop in background, then open this project in terminal (not docker terminal). Run the following code:
 ```
-docker build -t web-tf-nginx:latest
-docker run -d --name flask-vue-tf -e "PORT=8766" -p 8008:8766 web-tf-nginx:latest
+docker build -t web:latest
+docker run -d --name flask-vue -e "PORT=8766" -p 8008:8766 web:latest
 *Launch the docker container in localhost.*
 ```
 Alternatively, you may refer this <a href ="https://testdriven.io/blog/deploying-flask-to-heroku-with-docker-and-gitlab/" target="blank"> guide</a> by testdriven.io.
