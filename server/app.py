@@ -19,6 +19,8 @@ from keras.models import Sequential
 
 import joblib
 
+# TODO: implement session cookie in future
+
 # configuration
 DEBUG = False
 
@@ -64,6 +66,7 @@ def testPredict():
     # with open(os.path.join(os.path.dirname(__file__), 'test3.csv')) as f:
     #     df = pd.read_csv(f)
 
+    # other way to load model
     # file = os.path.join(os.path.dirname(__file__), 'model.h5')
     # model = keras.models.load_model("model.h5")
     # prediction = model.predict(X)
@@ -92,9 +95,11 @@ def testPredict2():
     X = df.to_numpy()
     X = X.reshape((X.shape[0], 1, X.shape[1]))
 
+    # other way to load model
     # model_path = "/app/model.p"
     # file = os.path.join(os.path.dirname(__file__), 'dummymodel.pickle')
     # file = os.path.join(os.path.dirname(__file__), 'model.h5')
+
     # # model = joblib.load(file)
     # model = pickle.load(open(file, 'rb'))
     # file = os.path.join(os.path.dirname(__file__), 'model_lstm.sav')
@@ -142,6 +147,7 @@ def predict():
         X = df.to_numpy()
         X = X.reshape((X.shape[0], 1, X.shape[1]))
 
+        # other way to load model
         # modelFile = os.path.join(os.path.dirname(__file__), 'model_lstm.sav')
         # model = joblib.load(modelFile)
         # model = pickle.load(open(modelFile, 'rb'))
@@ -204,7 +210,7 @@ def predict():
             'lime': exp_pd.to_json(orient='records')
         }
 
-    else:
+    else:   # GET request, return the csv file
         df_return.to_csv('excel_file.csv', index=False)
 
         file_stream = io.BytesIO(open('excel_file.csv', "rb").read())
@@ -217,31 +223,31 @@ def predict():
     return response
 
 
-@app.route('/upload', methods=['GET'])
-def getFile():
-    # Retrieve the DataFrame from the session
-    # df_dict = session.get('df_return')
-    # if df_dict is None:
-    #     return 'DataFrame not found in session'
+# @app.route('/upload', methods=['GET'])
+# def getFile():
+#     # Retrieve the DataFrame from the session
+#     # df_dict = session.get('df_return')
+#     # if df_dict is None:
+#     #     return 'DataFrame not found in session'
 
-    # # Convert the dictionary back to a DataFrame
-    # df1 = pd.DataFrame.from_dict(df_dict)
+#     # # Convert the dictionary back to a DataFrame
+#     # df1 = pd.DataFrame.from_dict(df_dict)
 
-    excel_file = df_return.to_csv('excel_file.csv', index=False)
+#     excel_file = df_return.to_csv('excel_file.csv', index=False)
 
-    # file_stream = io.BytesIO(open('excel_file.csv', "rb").read())
+#     # file_stream = io.BytesIO(open('excel_file.csv', "rb").read())
 
-    # response = send_file(file_stream,
-    #             download_name='excel_file.csv',
-    #             as_attachment=True)
-    response = jsonify({
-        'message': 'Excel file downloaded successfully!'
-    })
+#     # response = send_file(file_stream,
+#     #             download_name='excel_file.csv',
+#     #             as_attachment=True)
+#     response = jsonify({
+#         'message': 'Excel file downloaded successfully!'
+#     })
 
-    response.headers["Content-Disposition"] = "attachment; filename=myfile.xlsx"
-    response.headers["Content-Type"] = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+#     response.headers["Content-Disposition"] = "attachment; filename=myfile.xlsx"
+#     response.headers["Content-Type"] = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 
-    return response, excel_file
+#     return response, excel_file
 
 
 @app.route('/delete-csv', methods=['GET'])
