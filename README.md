@@ -37,7 +37,7 @@ python app.py
 ### Docker 
 Make sure you have Docker Desktop installed, if not download from <a href ="https://www.docker.com/products/docker-desktop/" target="blank"> here</a>.
 
-First open the project in terminal, then run the following code:
+Open docker desktop in background, then open this project in terminal (not docker terminal), then run the following code:
 ```
 docker build -t web-tf-nginx:latest
 docker run -d --name flask-vue-tf -e "PORT=8766" -p 8008:8766 web-tf-nginx:latest
