@@ -1,5 +1,5 @@
 # FYP-DeepAnomalyDetection
-Deployed Machine Learning Model using Flask + Vue + Tensorflow + XAI + Gunicorn + Nginx + Docker
+Desktop Web App: Deployed Machine Learning Model using Flask + Vue + Tensorflow + XAI + Gunicorn + Nginx + Docker
 
 Explanation on XAI coming soon...
 
