@@ -17,7 +17,7 @@ This is done as a student web dev project.
 cd client
 npm install
 npm run dev
-*Click on the link in the terminal to launch the web application in localhost*
+*Click on the link in the terminal to launch the web application in localhost.*
 ```
 
 #### *Install Python dependencies*
@@ -39,6 +39,7 @@ First open the project in terminal, then run the following code:
 ```
 docker build -t web-tf-nginx:latest
 docker run -d --name flask-vue-tf -e "PORT=8766" -p 8008:8766 web-tf-nginx:latest
+*Launch the docker container in localhost.*
 ```
 Alternatively, you may refer this <a href ="https://testdriven.io/blog/deploying-flask-to-heroku-with-docker-and-gitlab/" target="blank"> guide</a> by testdriven.io.
 
