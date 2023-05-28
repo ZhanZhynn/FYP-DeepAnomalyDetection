@@ -6,7 +6,7 @@ Explanation on XAI coming soon...
 This is done as a student web dev project.
 
 ## How to build project
-### Node.js + Flask (Python)
+### Node.js (Vue) + Flask (Python)
 1. Download & install Python <a href ="https://www.python.org/downloads/" target="blank"> here</a>.
 2. Download the LTS version of Node.js from the <a href ="" target="blank">  official website</a>.
 3. Clone/Fork this repo using git bash or any methods.
