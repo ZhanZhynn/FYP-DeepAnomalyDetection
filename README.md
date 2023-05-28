@@ -1,5 +1,7 @@
 # FYP-DeepAnomalyDetection
-Desktop Web App: Deployed Machine Learning Model using Flask + Vue + Tensorflow + XAI + Gunicorn + Nginx + Docker
+Deployed Machine Learning Model using Flask + Vue + Tensorflow + XAI + Gunicorn + Nginx + Docker
+
+It's a Desktop Web App, not ready for mobile view yet.
 
 Explanation on XAI coming soon...
 
