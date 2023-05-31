@@ -1,6 +1,8 @@
 # FYP-DeepAnomalyDetection
 Deployed Machine Learning Model using Flask + Vue + Tensorflow + XAI + Gunicorn + Nginx + Docker
 
+A fraud detection software based on <a href ="https://github.com/EdgarLopezPhD/PaySim" target="blank"> PaySim</a> Dataset.
+
 It's a Desktop Web App, not ready for mobile view yet.
 
 Explanation on XAI coming soon...
@@ -10,7 +12,7 @@ This is done as a student web dev project.
 ## How to build project
 ### Node.js (Vue) + Flask (Python)
 1. Download & install Python <a href ="https://www.python.org/downloads/" target="blank"> here</a>.
-2. Download the LTS version of Node.js from the <a href ="" target="blank">  official website</a>.
+2. Download the LTS version of Node.js from the <a href ="https://nodejs.org/en/download" target="blank">  official website</a>.
 3. Clone/Fork this repo using git bash or any methods.
 4. Open the terminal in the project directory, then run the following code to get Node.js running:
 
