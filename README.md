@@ -53,6 +53,9 @@ Alternatively, you may refer this <a href ="https://testdriven.io/blog/deploying
 - Python 3.10
 - Docker (optional)
 
+##Datasets
+https://drive.google.com/drive/folders/1NjaLaZ8tMeDQ9mOy4CiYV-T27jTpeUTi?usp=sharing
+
 ## References:
 - https://testdriven.io/blog/deploying-flask-to-heroku-with-docker-and-gitlab/
 - https://royleekiat.com/2020/11/27/how-to-deploy-your-machine-learning-web-application-vue-js-and-python-poc/
