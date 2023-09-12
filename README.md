@@ -8,6 +8,7 @@ A dummy test
 2. Download the LTS version of Node.js from the <a href ="https://nodejs.org/en/download" target="blank">  official website</a>.
 3. Clone/Fork this repo using git bash or any methods.
 4. Open the terminal in the project directory, then run the following code to get Node.js running:
+5. Make sure you are in "socketio" branch.
 
 ## How to run Socket-io
 ### 1. Run fast api server
