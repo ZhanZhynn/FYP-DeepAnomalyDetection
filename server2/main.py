@@ -94,7 +94,7 @@ async def generate(sid, message):
 
     headers = {
         "accept": "application/json",
-        "X-RapidAPI-Key": "e6a6426747msh63d83134cb238fbp1c9435jsnb027b66c84b0",
+        "X-RapidAPI-Key": "insert your key here",
         "X-RapidAPI-Host": "matchilling-chuck-norris-jokes-v1.p.rapidapi.com"
     }
 
