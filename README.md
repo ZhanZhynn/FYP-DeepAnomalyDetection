@@ -41,7 +41,7 @@ Make sure you have Docker Desktop installed, if not download from <a href ="http
 
 Open docker desktop in background, then open this project in terminal (not docker terminal). Run the following code:
 ```
-docker build -t web:latest
+docker build -t web:latest .
 docker run -d --name flask-vue -e "PORT=8766" -p 8008:8766 web:latest
 *Launch the docker container in localhost.*
 ```
